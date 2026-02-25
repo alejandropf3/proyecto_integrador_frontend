@@ -1,86 +1,104 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Mensajes - Ejercicio DOM</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>CRUD</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="container">
-        <!-- Encabezado principal -->
-        <header class="header">
-            <h1 class="header__title">Registro de Mensajes</h1>
-            <p class="header__subtitle">Practica la manipulación del DOM en tiempo real</p>
-        </header>
 
-        <!-- Formulario de entrada -->
-        <section class="form-section">
-            <div class="card">
-                <h2 class="card__title">Nuevo Mensaje</h2>
-                
-                <form id="messageForm" class="form" novalidate>
-                    <div class="form__group">
-                        <label for="userName" class="form__label">
-                            Nombre de usuario
-                        </label>
-                        <input 
-                            type="text" 
-                            id="userName" 
-                            class="form__input" 
-                            placeholder="Ingresa tu nombre"
-                            aria-required="true"
-                        >
-                        <span class="form__error" id="userNameError"></span>
-                    </div>
 
-                    <div class="form__group">
-                        <label for="userMessage" class="form__label">
-                            Tu mensaje
-                        </label>
-                        <textarea 
-                            id="userMessage" 
-                            class="form__input form__textarea" 
-                            placeholder="Escribe tu mensaje aquí..."
-                            rows="4"
-                            aria-required="true"
-                        ></textarea>
-                        <span class="form__error" id="userMessageError"></span>
-                    </div>
+<!-- VISTA 1: Registro de Usuarios -->
+    <div id="vistaUsuarios" class="vista">
 
-                    <button type="submit" class="btn btn--primary" id="submitBtn">
-                        <span class="btn__text">Agregar Mensaje</span>
-                        <span class="btn__icon">➤</span>
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Área de mensajes -->
-        <section class="messages-section">
-            <div class="messages-header">
-                <h2 class="messages-header__title">Mensajes Publicados</h2>
-                <span class="messages-header__count" id="messageCount">0 mensajes</span>
-            </div>
-            
-            <div id="messagesContainer" class="messages-container">
-                <!-- Los mensajes se agregarán aquí dinámicamente -->
-                <div class="messages-empty" id="emptyState">
-                    <svg class="messages-empty__icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    <p class="messages-empty__text">Aún no hay mensajes</p>
-                    <p class="messages-empty__subtext">Completa el formulario para agregar tu primer mensaje</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer informativo -->
-        <footer class="footer">
-            <p class="footer__text">Ejercicio de manipulación del DOM | SENA - Desarrollo Web</p>
-        </footer>
+    <div class="vista-header">
+        <h1>Registro de Usuarios</h1>
+        <button class="btn" id="btnIrTareas">Ir a Tareas</button>
     </div>
 
-    <script src="script.js"></script>
+    <div>
+        <form id="formUsuario">
+            <div>
+                <label for="documento">Documento</label>
+                <input type="text" name="documento" id="documento" placeholder="Ingrese su documento">
+            </div>
+            <div>
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre">
+            </div>
+            <div>
+            <p>Genero</p>
+                <div id="generos" class="generos"></div>
+            </div>
+            <div>
+                <label for="ciudad">Ciudades</label>
+                <select name="ciudad" id="ciudadId">
+            </select>
+            </div>
+            <div>
+                <label for="correo">Correo</label>
+                <input type="text" name="correo" id="correo" placeholder="Ingrese su correo">
+            </div>
+            <div class="checkbox-line">
+                <label for="terminos">¿Acepta las politicas de tratamientos de datos?</label>
+                <input type="checkbox" id="terminos">
+            </div>
+            <div>
+                <button class="btn" id="btnEnviar">Enviar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="seccion-buscar">
+        <h2>Buscar Usuario</h2>
+        
+        <div class="buscar-fila">
+            <input type="text" id="buscarDocumento" placeholder="Ingrese documento a buscar">
+            <button class="btn" id="btnBuscar">Buscar</button>
+        </div>
+
+        <div id="resultadoBusqueda"></div>
+    </div>
+
+    <div id="listaUsuarios" class="lista-usuarios"></div>
+
+    </div>
+
+    <!-- VISTA 2: Tareas -->
+    <div id="vistaTareas" class="vista oculto">
+
+    <div class="vista-header">
+        <h1>Tareas</h1>
+        <button class="btn" id="btnIrUsuarios">Ir a Registro de Usuarios</button>
+    </div>
+
+    <div class="seccion-tareas">
+        <form id="formTarea">
+            <div>
+                <label for="docTarea">Documento del usuario</label>
+                <input type="text" name="docTarea" id="docTarea" placeholder="Ingrese documento del usuario">
+            </div>
+            <div>
+                <label for="tituloTarea">Titulo de la tarea</label>
+                <input type="text" name="tituloTarea" id="tituloTarea" placeholder="Ingrese el titulo">
+            </div>
+            <div>
+                <label for="descripcionTarea">Descripcion</label>
+                <input type="text" name="descripcionTarea" id="descripcionTarea" placeholder="Ingrese la descripcion">
+            </div>
+            <div>
+                <button class="btn" id="btnCrearTarea">Crear Tarea</button>
+            </div>
+        </form>
+        <div id="listaTareas" class="lista-tareas"></div>
+    </div>
+
+    </div>
+
+    <script src="app.js" type="module"></script>
 </body>
+
 </html>
