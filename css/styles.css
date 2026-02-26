@@ -1,0 +1,16 @@
+@import url(base/base.css);
+/* Importo los estilos base (reset, tipografía, etc.)*/
+@import url(abstracts/variables.css);
+/* Importo las variables (colores, fuentes, espaciado)*/
+@import url(layout/header.css);
+/* Importo los estilos del header */
+@import url(layout/footer.css);
+/* Importo los estilos del footer */
+@import url(components/cards.css);
+/* Importo los estilos de las tarjetas */
+@import url(components/botones.css);
+/* Importo los estilos de los botones */
+@import url(pages/estiloCrearUsuarios.css);
+/* Importo los estilos de la página crear usuarios */
+@import url(pages/estiloCrearTareas.css);
+/* Importo los estilos de la página crear tareas */

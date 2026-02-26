@@ -1,0 +1,114 @@
+/* ============================================
+   CREAR USUARIOS — ESTILOS DE PÁGINA
+   Usa los componentes: .card, .btn, .btn--primary
+   Clases propias con prefijo "uc-" para evitar conflictos
+   ============================================ */
+
+
+/* ============================================
+   FORMULARIO
+   ============================================ */
+
+.uc-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 520px;
+  max-width: 600px;
+  margin: var(--spacing-xl) auto 0;
+}
+
+.uc-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.uc-form__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.uc-form__input {
+  width: 100%;
+  padding: var(--spacing-md);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+  outline: none;
+  line-height: 1.5;
+}
+
+.uc-form__input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-lighter);
+}
+
+.uc-form__input::placeholder {
+  color: var(--color-gray-400);
+}
+
+.uc-input--error {
+  border: 2px solid var(--color-error) !important;
+}
+
+
+/* ============================================
+   GÉNEROS (radio buttons)
+   ============================================ */
+
+.generos {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+}
+
+.generos div {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-xs);
+  align-items: center;
+}
+
+.checkbox-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* ============================================
+   ANIMACIÓN DE ELIMINACIÓN
+   ============================================ */
+
+.eliminando {
+  opacity: 0 !important;
+  transform: scale(0.95);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    margin 0.3s ease;
+  pointer-events: none;
+}
+
+
+/* ============================================
+   SECCIÓN DE USUARIOS
+   ============================================ */
+
+#usuarios {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-width: 600px;
+  margin: var(--spacing-xl) auto;
+}
