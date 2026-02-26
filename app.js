@@ -139,33 +139,33 @@ formulario.addEventListener("submit", async (e) => {
 
     try {
         if (usuarioEditandoId !== null) {
-        await actualizarUsuario(usuarioEditandoId, datosUsuario);
+            await actualizarUsuario(usuarioEditandoId, datosUsuario);
 
-        // Actualizar card existente sin recargar ni crear nueva
-        const cardExistente = listaUsuarios.querySelector(`[data-id='${usuarioEditandoId}']`);
-        if (cardExistente) {
-            const ciudad = datosCiudades.find(c => c.id == datosUsuario.ciudad_id);
-            const genero = datosGeneros.find(g => g.id == datosUsuario.genero_id);
+            // Actualizar card existente sin recargar ni crear nueva
+            const cardExistente = listaUsuarios.querySelector(`[data-id='${usuarioEditandoId}']`);
+            if (cardExistente) {
+                const ciudad = datosCiudades.find(c => c.id == datosUsuario.ciudad_id);
+                const genero = datosGeneros.find(g => g.id == datosUsuario.genero_id);
 
-            const cardInfo = cardExistente.querySelector(".card-info");
-            cardInfo.replaceChildren();
+                const cardInfo = cardExistente.querySelector(".card-info");
+                cardInfo.replaceChildren();
 
-            const crearParrafo = (label, valor) => {
-            const p = document.createElement('p');
-            const strong = document.createElement('strong');
-            strong.textContent = `${label}:`;
-            p.append(strong, ` ${valor || ''}`);
-            return p;
-            };
+                const crearParrafo = (label, valor) => {
+                    const p = document.createElement('p');
+                    const strong = document.createElement('strong');
+                    strong.textContent = `${label}:`;
+                    p.append(strong, ` ${valor || ''}`);
+                    return p;
+                };
 
-            cardInfo.append(
-                crearParrafo('Documento', datosUsuario.documento),
-                crearParrafo('Nombre', datosUsuario.nombre),
-                crearParrafo('Genero', genero ? genero.genero : ''),
-                crearParrafo('Ciudad', ciudad ? ciudad.ciudad : ''),
-                crearParrafo('Correo', datosUsuario.correo)
-            );
-        }
+                cardInfo.append(
+                    crearParrafo('Documento', datosUsuario.documento),
+                    crearParrafo('Nombre', datosUsuario.nombre),
+                    crearParrafo('Genero', genero ? genero.genero : ''),
+                    crearParrafo('Ciudad', ciudad ? ciudad.ciudad : ''),
+                    crearParrafo('Correo', datosUsuario.correo)
+                );
+            }
         } else {
             const nuevoUsuario = await crearUsuario(datosUsuario);
             // Agregar la nueva card dinamicamente
@@ -174,7 +174,7 @@ formulario.addEventListener("submit", async (e) => {
             listaUsuarios.append(card);
         }
 
-    limpiarFormularioUsuario();
+        limpiarFormularioUsuario();
     } catch (error) {
         console.error("Error al guardar usuario:", error);
         alert("Hubo un error al guardar el usuario: " + error.message);
@@ -203,14 +203,14 @@ listaUsuarios.addEventListener("click", async (e) => {
 
         if (confirm("¿Está seguro de eliminar este usuario?")) {
             try {
-            await eliminarUsuario(idEliminar);
-            const card = listaUsuarios.querySelector(`[data-id='${idEliminar}']`);
+                await eliminarUsuario(idEliminar);
+                const card = listaUsuarios.querySelector(`[data-id='${idEliminar}']`);
 
-            if (card) card.remove();
+                if (card) card.remove();
             } catch (error) {
                 console.error("Error al eliminar usuario:", error);
                 alert(`No se pudo eliminar el usuario: ${error.message}`);
-            }   
+            }
         }
     }
 });
@@ -294,40 +294,40 @@ formTarea.addEventListener("submit", async (e) => {
 
     try {
         if (tareaEditandoId !== null) {
-        // Al editar no se cambia el usuario, solo titulo y descripcion
-        const tareaActualizada = {
-            titulo: tituloValor,
-            descripcion: descValor,
-            documento_usuario: docValor
-        };
+            // Al editar no se cambia el usuario, solo titulo y descripcion
+            const tareaActualizada = {
+                titulo: tituloValor,
+                descripcion: descValor,
+                documento_usuario: docValor
+            };
 
-        await actualizarTarea(tareaEditandoId, tareaActualizada);
+            await actualizarTarea(tareaEditandoId, tareaActualizada);
 
-        const cardTarea = listaTareas.querySelector(`[data-id='${tareaEditandoId}']`);
-        if (cardTarea) {
-            const pDoc = cardTarea.querySelector(".tarea-info p:first-child");
-            pDoc.replaceChildren();
-            const strong = document.createElement('strong');
-            strong.textContent = 'Documento:';
-            pDoc.append(strong, ` ${docValor}`);
+            const cardTarea = listaTareas.querySelector(`[data-id='${tareaEditandoId}']`);
+            if (cardTarea) {
+                const pDoc = cardTarea.querySelector(".tarea-info p:first-child");
+                pDoc.replaceChildren();
+                const strong = document.createElement('strong');
+                strong.textContent = 'Documento:';
+                pDoc.append(strong, ` ${docValor}`);
 
-            cardTarea.querySelector(".tarea-titulo").textContent = tituloValor;
-            cardTarea.querySelector(".tarea-descripcion").textContent = descValor;
-        }
+                cardTarea.querySelector(".tarea-titulo").textContent = tituloValor;
+                cardTarea.querySelector(".tarea-descripcion").textContent = descValor;
+            }
 
-        tareaEditandoId = null;
-        btnCrearTarea.textContent = "Crear Tarea";
+            tareaEditandoId = null;
+            btnCrearTarea.textContent = "Crear Tarea";
         } else {
             const nuevaTarea = {
                 documento_usuario: docValor,
                 titulo: tituloValor,
                 descripcion: descValor
-        };
+            };
 
-        const tareaCreada = await crearTarea(nuevaTarea);
-        const { armarCardTarea: buildCard } = await import("./components/tareas.js");
-        const cardNueva = buildCard(tareaCreada);
-        listaTareas.append(cardNueva);
+            const tareaCreada = await crearTarea(nuevaTarea);
+            const { armarCardTarea: buildCard } = await import("./components/tareas.js");
+            const cardNueva = buildCard(tareaCreada);
+            listaTareas.append(cardNueva);
         }
 
         formTarea.reset();
@@ -337,29 +337,29 @@ formTarea.addEventListener("submit", async (e) => {
         console.error("Error al guardar tarea:", error);
         alert(`Hubo un error al guardar la tarea: ${error.message}`);
     }
-    });
+});
 
-    // Delegacion de eventos en lista de tareas
-    listaTareas.addEventListener("click", async (e) => {
+// Delegacion de eventos en lista de tareas
+listaTareas.addEventListener("click", async (e) => {
     const btnEditar = e.target.closest(".btn-editar-tarea");
     if (btnEditar) {
         const id = btnEditar.getAttribute("data-id");
         const card = listaTareas.querySelector(`[data-id='${id}']`);
 
         if (card) {
-        const tituloTexto = card.querySelector(".tarea-titulo").textContent;
-        const descTexto = card.querySelector(".tarea-descripcion").textContent;
-        const docElemento = card.querySelector(".tarea-info p:first-child");
-        const docTexto = docElemento.textContent.replace("Documento:", "").trim();
+            const tituloTexto = card.querySelector(".tarea-titulo").textContent;
+            const descTexto = card.querySelector(".tarea-descripcion").textContent;
+            const docElemento = card.querySelector(".tarea-info p:first-child");
+            const docTexto = docElemento.textContent.replace("Documento:", "").trim();
 
-        docTarea.value = docTexto;
-        tituloTarea.value = tituloTexto;
-        descripcionTarea.value = descTexto;
-        docTarea.disabled = true;
+            docTarea.value = docTexto;
+            tituloTarea.value = tituloTexto;
+            descripcionTarea.value = descTexto;
+            docTarea.disabled = true;
 
-        tareaEditandoId = id;
-        btnCrearTarea.textContent = "Actualizar Tarea";
-        formTarea.scrollIntoView({ behavior: "smooth" });
+            tareaEditandoId = id;
+            btnCrearTarea.textContent = "Actualizar Tarea";
+            formTarea.scrollIntoView({ behavior: "smooth" });
         }
     }
 
@@ -367,14 +367,14 @@ formTarea.addEventListener("submit", async (e) => {
     if (btnEliminar) {
         const idEliminar = btnEliminar.getAttribute("data-id");
         if (confirm("¿Está seguro de eliminar esta tarea?")) {
-        try {
-            await eliminarTarea(idEliminar);
-            const cardEliminar = listaTareas.querySelector(`[data-id='${idEliminar}']`);
-            if (cardEliminar) cardEliminar.remove();
-        } catch (error) {
-            console.error("Error al eliminar tarea:", error);
-            alert(`No se pudo eliminar la tarea: ${error.message}`);
-        }
+            try {
+                await eliminarTarea(idEliminar);
+                const cardEliminar = listaTareas.querySelector(`[data-id='${idEliminar}']`);
+                if (cardEliminar) cardEliminar.remove();
+            } catch (error) {
+                console.error("Error al eliminar tarea:", error);
+                alert(`No se pudo eliminar la tarea: ${error.message}`);
+            }
         }
     }
 });
