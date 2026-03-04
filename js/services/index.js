@@ -1,0 +1,1 @@
+export { procesarTareasParaExportar } from './tareasService';

@@ -2,17 +2,6 @@
 // MÓDULO DE EXPORTACIÓN - RF04
 // Exporta las tareas visibles en pantalla a JSON
 // ============================================
-
-const procesarTareasParaExportar = (tareas) => {
-    return tareas.map(tarea => ({
-        id: tarea.id,
-        documento_usuario: tarea.documento_usuario,
-        titulo: tarea.titulo,
-        descripcion: tarea.descripcion,
-        estado: tarea.estado || "pendiente"
-    }));
-};
-
 export const exportarTareasJSON = (tareas) => {
     if (!tareas || tareas.length === 0) return false;
 

@@ -7,6 +7,7 @@ import { inicializarOrdenamiento } from "./js/ui/ordenamiento.js";
 import { notificarExito, notificarError, notificarInfo } from "./js/ui/notificaciones.js";
 import { exportarTareasJSON } from "./js/ui/exportar.js";
 import { getTareas, crearTarea, actualizarTarea, eliminarTarea, getUsuarioPorDocumento } from "./js/api/index.js";
+import { procesarTareasParaExportar } from "./js/services/index.js";
 
 // Variables globales
 let tareaEditandoId = null;
@@ -214,7 +215,8 @@ listaTareas.addEventListener("click", async (e) => {
 if (btnExportar) {
     btnExportar.addEventListener("click", () => {
         const tareas = obtenerTodasLasTareas();
-        const exportado = exportarTareasJSON(tareas);
+        const procesado = procesarTareasParaExportar(tareas);
+        const exportado = exportarTareasJSON(procesado);
         if (exportado) {
             notificarExito("Tareas exportadas correctamente");
         } else {
