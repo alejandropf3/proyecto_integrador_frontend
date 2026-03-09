@@ -1,7 +1,7 @@
 // Importaciones específicas para usuarios
-import { armarCiudades, armarGenero, armarListaUsuarios } from "./js/ui/index.js";
-import { validar } from "./js/utils/validarFormulario.js";
-import { ciudades, generos, getUsuarios, getUsuarioPorDocumento, crearUsuario, actualizarUsuario, eliminarUsuario } from "./js/api/index.js";
+import { armarCiudades, armarGenero, armarListaUsuarios } from "../js/ui/index.js";
+import { validar } from "../js/utils/validarFormulario.js";
+import { ciudades, generos, getUsuarios, getUsuarioPorDocumento, crearUsuario, actualizarUsuario, eliminarUsuario } from "../js/api/index.js";
 
 // variables globales (solo para usuarios)
 let datosCiudades = [];
@@ -137,7 +137,7 @@ formulario.addEventListener("submit", async (e) => {
             }
         } else {
             const nuevoUsuario = await crearUsuario(datosUsuario);
-            const { armarCardUsuario } = await import("./js/ui/usuarios.js");
+            const { armarCardUsuario } = await import("../js/ui/usuarios.js");
             const card = armarCardUsuario(nuevoUsuario, datosCiudades, datosGeneros);
             listaUsuarios.append(card);
         }
