@@ -2,11 +2,11 @@
 // SCRIPT PARA FORMULARIO DE TAREAS
 // ============================================
 
-import { armarListaTareas, armarCardTarea, guardarTareasParaFiltro, inicializarFiltros, obtenerTodasLasTareas } from "./js/ui/tareas.js";
-import { notificarExito, notificarError, notificarInfo } from "./js/ui/notificaciones.js";
-import { exportarTareasJSON } from "./js/ui/exportar.js";
-import { getTareas, crearTarea, actualizarTarea, eliminarTarea, getUsuarioPorDocumento } from "./js/api/index.js";
-import { procesarTareasParaExportar, inicializarOrdenamiento } from "./js/services/index.js";
+import { armarListaTareas, armarCardTarea, guardarTareasParaFiltro, inicializarFiltros, obtenerTodasLasTareas } from "./tareas.js";
+import { notificarExito, notificarError, notificarInfo } from "./notificaciones.js";
+import { exportarTareasJSON } from "./exportar.js";
+import { getTareas, crearTarea, actualizarTarea, eliminarTarea, getUsuarioPorDocumento } from "../api/index.js";
+import { procesarTareasParaExportar, inicializarOrdenamiento } from "../services/index.js";
 
 // Variables globales
 let tareaEditandoId = null;
