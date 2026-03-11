@@ -19,7 +19,7 @@ export const crearTarea = async (tarea) => {
     return isNaN(idNum) ? max : Math.max(max, idNum);
   }, 0);
 
-  tarea.id = maxId + 1;
+  tarea.id = (maxId + 1).toString();
 
   const solicitud = await fetch('http://localhost:3000/tareas', {
     method: 'POST',
@@ -32,20 +32,19 @@ export const crearTarea = async (tarea) => {
 };
 
 export const actualizarTarea = async (id, tarea) => {
-  const idNum = Number(id);
-  const solicitud = await fetch('http://localhost:3000/tareas/' + idNum, {
+  
+  const solicitud = await fetch(`http://localhost:3000/tareas/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ...tarea, id: idNum })
+    body: JSON.stringify({ ...tarea, id: id })
   });
-  if (!solicitud.ok) throw new Error("Status " + solicitud.status + ": No se pudo actualizar la tarea (ID: " + idNum + ")");
+  if (!solicitud.ok) throw new Error("Status " + solicitud.status + ": No se pudo actualizar la tarea (ID: " + id + ")");
   const datos = await solicitud.json();
   return datos;
 };
 
 export const eliminarTarea = async (id) => {
-  const idNum = Number(id);
-  const solicitud = await fetch('http://localhost:3000/tareas/' + idNum, {
+  const solicitud = await fetch(`http://localhost:3000/tareas/${id}`, {
     method: 'DELETE'
   });
   if (!solicitud.ok) throw new Error("Status " + solicitud.status + ": No se pudo eliminar la tarea (ID: " + id + ")");
