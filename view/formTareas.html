@@ -22,10 +22,6 @@
             <form id="formTarea" class="formSection">
                 <h2 class="formTitle">Registro de Tareas</h2>
                 <div class="formGroup">
-                    <label for="docTarea" class="formLabel">Documento del usuario</label>
-                    <input type="text" name="docTarea" id="docTarea" class="formInput" placeholder="Ingrese documento del usuario">
-                </div>
-                <div class="formGroup">
                     <label for="tituloTarea" class="formLabel">Titulo de la tarea</label>
                     <input type="text" name="tituloTarea" id="tituloTarea" class="formInput" placeholder="Ingrese el titulo">
                 </div>
@@ -40,6 +36,11 @@
                         <option value="en proceso">En proceso</option>
                         <option value="completada">Completada</option>
                     </select>
+                </div>
+                <div class="formGroup">
+                    <p class="formLabel">Asignar usuarios</p>
+                    <div class="userSelector" id="userSelector">
+                    </div>
                 </div>
                 <div class="formGroup">
                     <button class="btn btnPrimary" id="btnCrearTarea" type="submit">Crear Tarea</button>

@@ -91,6 +91,43 @@
 }
 
 /* ============================================
+   SELECTOR DE USUARIOS
+   ============================================ */
+
+/* Contenedor del selector de usuarios */
+.userSelector {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #fff;
+    max-height: 150px; /* Altura controlada */
+    overflow-y: auto;  /* Scroll vertical */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.userOption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+}
+
+.userCheckbox {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+.userLabel {
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+
+/* ============================================
    SECCIÓN DE MENSAJES
    ============================================ */
 

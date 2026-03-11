@@ -6,7 +6,8 @@
 export const procesarTareasParaExportar = (tareas) => {
     return tareas.map(tarea => ({
         id: tarea.id,
-        documento_usuario: tarea.documento_usuario,
+        documento_usuario: tarea.documento_usuario || (tarea.usuarios_asignados ? tarea.usuarios_asignados.join(", ") : ""),
+        usuarios_asignados: tarea.usuarios_asignados || (tarea.documento_usuario ? [tarea.documento_usuario] : []),
         titulo: tarea.titulo,
         descripcion: tarea.descripcion,
         estado: tarea.estado || "pendiente"
@@ -55,27 +56,32 @@ export const filtrarTareas = (tareas, criterios) => {
     const { documento, estado, usuario } = criterios;
     
     return tareas.filter(tarea => {
+        // Filtrar por documento (compatibilidad con formato antiguo)
         const cumpleDocumento = !documento || 
-            (tarea.documento_usuario && tarea.documento_usuario.toLowerCase().includes(documento));
+            (tarea.documento_usuario && tarea.documento_usuario.toLowerCase().includes(documento)) ||
+            (tarea.usuarios_asignados && tarea.usuarios_asignados.some(doc => doc.toLowerCase().includes(documento)));
         
+        // Filtrar por estado
         const cumpleEstado = !estado || 
             (tarea.estado && tarea.estado === estado);
             
+        // Filtrar por usuario (soporta tanto formato antiguo como nuevo)
         const cumpleUsuario = !usuario || 
-            (tarea.documento_usuario && tarea.documento_usuario.toLowerCase().includes(usuario));
+            (tarea.documento_usuario && tarea.documento_usuario.toLowerCase().includes(usuario)) ||
+            (tarea.usuarios_asignados && tarea.usuarios_asignados.some(doc => doc.toLowerCase().includes(usuario)));
             
         return cumpleDocumento && cumpleEstado && cumpleUsuario;
     });
 };
 
-export const inicializarOrdenamiento = (contenedor, obtenerTareas, renderizar) => {
+export const inicializarOrdenamiento = async (contenedor, obtenerTareas, renderizar) => {
     const selectOrden = document.getElementById("selectOrden");
     if (!selectOrden) return;
 
-    selectOrden.addEventListener("change", () => {
+    selectOrden.addEventListener("change", async () => {
         const criterio = selectOrden.value;
-        const tareas = obtenerTareas();
+        const tareas = await obtenerTareas();
         const tareasOrdenadas = criterio ? ordenarTareas(tareas, criterio) : tareas;
-        renderizar(contenedor, tareasOrdenadas);
+        await renderizar(contenedor, tareasOrdenadas);
     });
 };

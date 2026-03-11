@@ -4,7 +4,7 @@
 
 import { filtrarTareas } from "../services/tareasService.js";
 
-export const armarCardTarea = (tarea) => {
+export const armarCardTarea = async (tarea) => {
     const card = document.createElement("div");
     card.classList.add("cardTarea");
     card.setAttribute("data-id", tarea.id);
@@ -39,8 +39,32 @@ export const armarCardTarea = (tarea) => {
     strongEstado.textContent = "Estado:";
     pEstado.append(strongEstado, " ", spanEstado);
 
+    // Mostrar usuarios asignados (soporta múltiples usuarios y el formato antiguo)
+    let usuariosTexto = "No asignados";
+    if (tarea.usuarios_asignados && Array.isArray(tarea.usuarios_asignados) && tarea.usuarios_asignados.length > 0) {
+        // Formato nuevo: array de documentos
+        try {
+            const { getUsuarios } = await import("../api/index.js");
+            const usuarios = await getUsuarios();
+            const usuariosAsignados = usuarios.filter(u => tarea.usuarios_asignados.includes(u.documento));
+            usuariosTexto = usuariosAsignados.map(u => `${u.nombre} (${u.documento})`).join(", ");
+        } catch (error) {
+            console.error("Error al obtener usuarios para mostrar:", error);
+            usuariosTexto = tarea.usuarios_asignados.join(", ");
+        }
+    } else if (tarea.documento_usuario) {
+        // Formato antiguo: documento único
+        usuariosTexto = tarea.documento_usuario;
+    }
+
+    const pUsuarios = document.createElement("p");
+    pUsuarios.classList.add("tareaUsuarios");
+    const strongUsuarios = document.createElement("strong");
+    strongUsuarios.textContent = "Usuarios:";
+    pUsuarios.append(strongUsuarios, " ", usuariosTexto);
+
     tareaInfo.append(
-        crearParrafo("Documento", tarea.documento_usuario),
+        pUsuarios,
         crearParrafo("Titulo", tarea.titulo, "tareaTitulo"),
         crearParrafo("Descripcion", tarea.descripcion, "tareaDescripcion"),
         pEstado
@@ -65,7 +89,7 @@ export const armarCardTarea = (tarea) => {
     return card;
 };
 
-export const armarListaTareas = (contenedor, tareas) => {
+export const armarListaTareas = async (contenedor, tareas) => {
     contenedor.replaceChildren();
 
     if (tareas.length === 0) {
@@ -77,10 +101,10 @@ export const armarListaTareas = (contenedor, tareas) => {
     }
 
     const fragmento = document.createDocumentFragment();
-    tareas.forEach(tarea => {
-        const card = armarCardTarea(tarea);
+    for (const tarea of tareas) {
+        const card = await armarCardTarea(tarea);
         fragmento.append(card);
-    });
+    }
     contenedor.append(fragmento);
 };
 
@@ -97,7 +121,7 @@ export const guardarTareasParaFiltro = (tareas) => {
 
 export const obtenerTodasLasTareas = () => todasLasTareas;
 
-const aplicarFiltros = (contenedor) => {
+const aplicarFiltros = async (contenedor) => {
     const criterios = {
         documento: document.getElementById("filtroDocumento").value.trim().toLowerCase(),
         estado: document.getElementById("filtroEstado").value,
@@ -105,14 +129,14 @@ const aplicarFiltros = (contenedor) => {
     };
 
     const tareasFiltradas = filtrarTareas(todasLasTareas, criterios);
-    armarListaTareas(contenedor, tareasFiltradas);
+    await armarListaTareas(contenedor, tareasFiltradas);
 };
 
-const limpiarFiltros = (contenedor) => {
+const limpiarFiltros = async (contenedor) => {
     document.getElementById("filtroDocumento").value = "";
     document.getElementById("filtroEstado").value = "";
     document.getElementById("filtroUsuario").value = "";
-    armarListaTareas(contenedor, todasLasTareas);
+    await armarListaTareas(contenedor, todasLasTareas);
 };
 
 export const inicializarFiltros = (contenedor) => {

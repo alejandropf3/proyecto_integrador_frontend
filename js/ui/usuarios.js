@@ -53,3 +53,38 @@ export const armarListaUsuarios = (contenedor, usuarios, ciudadesData, generosDa
   });
   contenedor.append(fragmento);
 };
+
+export const armarSelectorUsuarios = (contenedor, usuarios) => {
+    contenedor.replaceChildren(); // Limpia el contenedor (p.ej. el mensaje de "Cargando...")
+    
+    if (usuarios.length === 0) {
+        contenedor.innerHTML = '<p class="formLabel">No hay usuarios registrados</p>';
+        return;
+    }
+
+    const fragmento = document.createDocumentFragment();
+
+    usuarios.forEach(usuario => {
+        const div = document.createElement('div');
+        div.classList.add('userOption');
+        
+        // Estructura interna: checkbox + label
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'usuariosAsignados';
+        checkbox.id = `user_${usuario.documento}`;
+        checkbox.value = usuario.documento;
+        checkbox.classList.add('userCheckbox');
+
+        const label = document.createElement('label');
+        label.setAttribute('for', `user_${usuario.documento}`);
+        label.textContent = `${usuario.nombre} (${usuario.documento})`;
+        label.classList.add('userLabel');
+
+        div.append(checkbox, label);
+        fragmento.append(div);
+    });
+
+    contenedor.append(fragmento);
+};
+
